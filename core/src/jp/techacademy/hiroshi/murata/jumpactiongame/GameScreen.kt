@@ -236,8 +236,11 @@ class GameScreen(private val mGame: JumpActionGame) : ScreenAdapter() {
     }
 
     private fun updateGameOver(){
-        if(mHeightSoFar - CAMERA_HEIGHT / 2 > mPlayer.y){
-            Gdx.app.log("JumpActionGame","GAMEOVER")
+//        if(mHeightSoFar - CAMERA_HEIGHT / 2 > mPlayer.y){
+//            Gdx.app.log("JumpActionGame","GAMEOVER")
+//        }
+        if(Gdx.input.justTouched()){
+            mGame.screen = ResultScreen(mGame, mScore)
         }
     }
 
