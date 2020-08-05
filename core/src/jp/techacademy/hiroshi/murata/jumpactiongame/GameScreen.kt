@@ -173,7 +173,6 @@ class GameScreen(private val mGame: JumpActionGame) : ScreenAdapter() {
             if (left.contains(mTouchPoint.x, mTouchPoint.y)){
                 accel = 5.0f
             }
-
             if (right.contains(mTouchPoint.x, mTouchPoint.y)){
                 accel = -5.0f
             }
@@ -188,7 +187,52 @@ class GameScreen(private val mGame: JumpActionGame) : ScreenAdapter() {
         }
         mPlayer.update(delta,accel)
         mHeightSoFar = Math.max(mPlayer.y, mHeightSoFar)
+
+        checkCollision()
     }
 
     private fun updateGameOver(){}
+
+    private fun checkCollision(){
+        if(mPlayer.boundingRectangle.overlaps(mUfo.boundingRectangle)){
+            mGameState = GAME_STATE_GAMEOVER
+            return
+        }
+
+        for (i in 0 until mStars.size){
+            val star = mStars[i]
+
+            if (star.mState == Star.STAR_NONE){
+                continue
+            }
+
+            if (mPlayer.boundingRectangle.overlaps(star.boundingRectangle)){
+                star.get()
+                break
+            }
+        }
+
+        if(mPlayer.velocity.y > 0){
+            return
+        }
+
+        for (i in 0 until mSteps.size){
+            val step = mSteps[i]
+
+            if (step.mState == Step.STEP_STATE_VANISH){
+                continue
+            }
+
+            if (mPlayer.y > step.y){
+                if(mPlayer.boundingRectangle.overlaps(step.boundingRectangle)){
+                    mPlayer.hitStep()
+                    if(mRandom.nextFloat() > 0.5f){
+                        step.vanish()
+                    }
+                    break
+                }
+            }
+        }
+
+    }
 }
