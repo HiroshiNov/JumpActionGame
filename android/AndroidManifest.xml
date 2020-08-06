@@ -3,8 +3,8 @@
     package="jp.techacademy.hiroshi.murata.jumpactiongame" >
 
 
-    <users-permission android:name="android.permission.INTERNET"/>
-    <users-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<!--    <users-permission android:name="android.permission.INTERNET"/>-->
+<!--    <users-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
 
 
     <application
